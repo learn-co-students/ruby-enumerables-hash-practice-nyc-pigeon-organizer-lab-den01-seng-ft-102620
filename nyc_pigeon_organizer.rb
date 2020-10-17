@@ -20,12 +20,20 @@ pigeon_data = {
 }
 
 def nyc_pigeon_organizer(data)
-  pigeon_list = {}
-  i = 0
-  while i < data.length do
-    color_gender_lives = data[i]
-    return color_gender_lives
+  final_results = data.each_with_object({}) do |(key, value), final_array|
+      value.each do |inner_key, names|
+        names.each do |name|
+          if !final_array[name]
+            final_array[name] = {}
+          end
+          if !final_array[name][key] 
+            final_array[name][key] = []
+          end
+          final_array[name][key].push(inner_key.to_s)
+        end
+      end
   end
+  final_results
 end
 
 puts nyc_pigeon_organizer(pigeon_data)
